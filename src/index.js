@@ -24,8 +24,7 @@ ReactDOM.render((
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
-          <Route path="attestation" component={Attestation} />
+          <Route path="attestation" component={UserIsAuthenticated(Attestation)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
           <Route path="medicalRecord" component={UserIsAuthenticated(MedicalRecord)} />
           <Route path="addDoctor" component={AddDoctor} />

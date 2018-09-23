@@ -14,7 +14,7 @@ export function loginUser() {
     // UPort and its web3 instance are defined in ./../../../util/wrappers.
     // Request uPort persona of account passed via QR
     uport.requestCredentials({
-      requested: ['name', 'phone', 'country', 'MedicalRecords'],
+      requested: ['name', 'phone', 'country', 'avatar', 'MedicalRecords'],
       notifications: true // We want this if we want to recieve credentials
     }).then((credentials) => {
       dispatch(userLoggedIn(credentials))
@@ -28,7 +28,7 @@ export function loginUser() {
         return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
       }
 
-      return browserHistory.push('/dashboard')
+      return browserHistory.push('/profile')
     })
   }
 }

@@ -1,5 +1,5 @@
 pragma solidity ^0.4.17;
-import "github.com/oraclize/ethereum-api/oraclizeAPI.sol";
+import "./Oraclize.sol";
 
 contract Directory is usingOraclize{
 
@@ -28,17 +28,17 @@ contract Directory is usingOraclize{
         LogMessage("Doctor Removed.");
     }
 
-    // function __callback(bytes32 myid, string result) {
-    //     if (msg.sender != oraclize_cbAddress()) revert();
-    //     LogMessage("Record added.");
-    // }
+    function __callback(bytes32 myid, string result) {
+        
+    }
 
-    // function addRecord(string _name, string _bloodType, string _alergies) payable {
-    //     if (oraclize_getPrice("URL") > this.balance) {
-    //         LogNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
-    //     } else {
-    //         LogNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
-    //         oraclize_query("URL", "json(https://api.kraken.com/0/public/Ticker?pair=ETHXBT).result.XETHXXBT.c.0");
-    //     }
-    // }
+    function addRecord(string _url) public payable {
+        LogMessage("Doctor Removed.");
+        if (oraclize_getPrice("URL") > this.balance) {
+            LogNewOraclizeQuery("Oraclize query was NOT sent, please add some ETH to cover for the query fee");
+        } else {
+            LogNewOraclizeQuery("Oraclize query was sent, standing by for the answer..");
+            oraclize_query("URL", _url);
+        }
+    }
 }

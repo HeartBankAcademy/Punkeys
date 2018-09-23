@@ -4,7 +4,7 @@ import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 import getWeb3 from './util/getWeb3'
 import DirectoryContract from '../build/contracts/Directory.json'
 // Images
-import uPortLogo from './img/Shape.png'
+import Logo from './img/logo.png'
 
 // UI Components
 import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
@@ -83,9 +83,6 @@ class App extends Component {
     
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
-        <li className="pure-menu-item">
-          <Link to="/dashboard" className="pure-menu-link">Dashboard</Link>
-        </li>
         {
           this.state.isDoctor ?
             <li className="pure-menu-item">
@@ -113,7 +110,7 @@ class App extends Component {
     return (
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal background-gradient" >
-          <Link to="/" className="pure-menu-heading pure-menu-link">Truffle Box</Link>
+          <Link to="/" className="pure-menu-heading"><img src={Logo} alt="" width="20px"/></Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />

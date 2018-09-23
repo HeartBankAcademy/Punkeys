@@ -32,6 +32,9 @@ class App extends Component {
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <span>
         <LoginButtonContainer />
+        <li className="pure-menu-item">
+          <Link to="/addDoctor" className="pure-menu-link">Add Doctor</Link>
+        </li>
       </span>
     )
 

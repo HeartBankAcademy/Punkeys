@@ -11,6 +11,7 @@ import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
 import Attestation from './layouts/attestation/Attestation'
 import MedicalRecord from './layouts/medicalRecord/MedicalRecord'
+import AddDoctor from './layouts/addDoctor/AddDoctor'
 import Profile from './user/layouts/profile/Profile'
 
 // Redux Store
@@ -27,6 +28,7 @@ ReactDOM.render((
           <Route path="attestation" component={Attestation} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
           <Route path="medicalRecord" component={UserIsAuthenticated(MedicalRecord)} />
+          <Route path="addDoctor" component={AddDoctor} />
         </Route>
       </Router>
     </Provider>

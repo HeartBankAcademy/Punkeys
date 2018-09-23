@@ -1,9 +1,6 @@
 import React, {Component} from 'react'
 import { uport } from './../../../util/connectors.js'
 
-// Images
-import uPortLogo from '../../../img/uport-logo.svg'
-
 class AttestButton extends Component{
     attest(){
         uport.requestCredentials().then((credentials) => {

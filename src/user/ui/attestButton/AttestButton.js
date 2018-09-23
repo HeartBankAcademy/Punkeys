@@ -1,8 +1,12 @@
 import React, {Component} from 'react'
 import { uport } from './../../../util/connectors.js'
+import DirectoryContract from '../../../../build/contracts/Directory.json'
+import getWeb3 from '../../../util/getWeb3'
 
 class AttestButton extends Component{
+
     attest(){
+
         uport.requestCredentials().then((credentials) => {
             // Can verify the uport user is verified with the returned 'credentials' object.
             uport.attestCredentials({

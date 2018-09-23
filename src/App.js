@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
+import getWeb3 from './util/getWeb3'
+import DirectoryContract from '../build/contracts/Directory.json'
+// Images
+import uPortLogo from './img/Shape.png'
 
 // UI Components
 import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
@@ -13,15 +17,83 @@ import './css/pure-min.css'
 import './App.css'
 
 class App extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      web3: null,
+      contract: null,
+      account: null,
+      isDoctor: false
+    }
+  }
+
+  componentWillMount() {
+    // Get network provider and web3 instance.
+    // See utils/getWeb3 for more info.
+
+    getWeb3
+    .then(results => {
+      this.setState({
+        web3: results.web3
+      })
+
+      // Instantiate contract once web3 provided.
+      this.instantiateContract()
+    })
+    .catch(() => {
+      console.log('Error finding web3.')
+    })
+  }
+
+  instantiateContract() {
+    /*
+     * SMART CONTRACT EXAMPLE
+     *
+     * Normally these functions would be called in the context of a
+     * state management library, but for convenience I've placed them here.
+     */
+
+    const contract = require('truffle-contract')
+    const directory = contract(DirectoryContract)
+    directory.setProvider(this.state.web3.currentProvider)
+
+    // Declaring this for later so we can chain functions on SimpleStorage.
+    var directoryInstance
+
+    // Get accounts.
+    this.state.web3.eth.getAccounts((error, accounts) => {
+      directory.deployed().then((instance) => {
+        directoryInstance = instance
+
+
+        return directoryInstance.Doctors.call(accounts[0])
+      }).then((result) => {
+        // Get the value from the contract to prove it worked.
+        console.log(result)
+        return this.setState({ isDoctor: result, contract: directoryInstance, account: accounts[0] })
+      })
+    })
+
+  }
+
+
   render() {
+    
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
         <li className="pure-menu-item">
           <Link to="/dashboard" className="pure-menu-link">Dashboard</Link>
         </li>
-        <li className="pure-menu-item">
-          <Link to="/attestation" className="pure-menu-link">Attestation</Link>
-        </li>
+        {
+          this.state.isDoctor ?
+            <li className="pure-menu-item">
+              <Link to="/attestation" className="pure-menu-link">Attestation</Link>
+            </li>
+          :
+            null
+        }
         <li className="pure-menu-item">
           <Link to="/profile" className="pure-menu-link">Profile</Link>
         </li>
@@ -40,7 +112,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <nav className="navbar pure-menu pure-menu-horizontal">
+        <nav className="navbar pure-menu pure-menu-horizontal background-gradient" >
           <Link to="/" className="pure-menu-heading pure-menu-link">Truffle Box</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />

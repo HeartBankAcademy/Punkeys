@@ -3,18 +3,16 @@ import DirectoryContract from '../../../build/contracts/Directory.json'
 import getWeb3 from '../../util/getWeb3'
 
 class Attestation extends Component {
-  state = {
-      addDoctorAddress: "",
-      removeDoctorAddress: ""
-  }
-
+  
   constructor(props) {
     super(props)
 
     this.state = {
       web3: null,
       contract: null,
-      account: null
+      account: null,
+      addDoctorAddress: "",
+      removeDoctorAddress: ""
     }
   }
 
